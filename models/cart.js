@@ -17,6 +17,10 @@ const cartSchema = new mongoose.Schema({
       },
     },
   ],
+  payment: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const cartModel = mongoose.model("Cart", cartSchema);
