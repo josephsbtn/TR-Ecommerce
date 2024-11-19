@@ -1,4 +1,5 @@
 import React from "react";
+import loginDesign from "../component/design/loginDesign";
 
 function Login() {
   return (
