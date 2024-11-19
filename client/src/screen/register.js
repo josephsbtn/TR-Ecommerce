@@ -11,13 +11,17 @@ function Register() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [image, setImage] = useState("");
 
+  useEffect()=>{
+    
+  }
+
   return (
     <>
-      <section className="flex h-screen w-full bg-myBlue  justify-center items-center">
+      <section className="flex  h-screen w-full bg-myBlue  justify-center items-center">
         <LoginDesign />
-        <div className="flex flex-col h-fit w-fit p-4 justify-center items-center bg-white ">
+        <div className="flex flex-col w-1/3 h-fit  p-4 justify-center items-center bg-white ">
           <form className="flex flex-col w-full p-4 space-y-4">
-            <div className="flex flex-col space-y-2">
+            <div className=" flex flex-col space-y-2">
               <label className="font-montserrat ">E-mail</label>
               <input
                 type="email"
