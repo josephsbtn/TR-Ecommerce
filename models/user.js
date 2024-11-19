@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema(
     },
     homeAddress: {
       type: String,
-      required: true,
     },
     phoneNumber: {
       type: String,
@@ -33,7 +32,6 @@ const userSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }

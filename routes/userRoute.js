@@ -14,21 +14,25 @@ router.get("/getallusers", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const newuser = new User({
-    email: req.body.email,
-    password: bcrypt.hash(req.body.password),
-    username: req.body.username,
-    fullname: req.body.fullname,
-    isAdmin: req.body.isAdmin,
-    homeAddress: req.body.homeAddress,
-    phoneNumber: req.body.phoneNumber,
-    image: req.body.image,
-  });
+  const { email, password, username, fullname, phoneNumber } = req.body;
+
   try {
-    const user = await newuser.save();
+    const levelHash = await bcrypt.genSalt(10);
+    const hashPass = await bcrypt.hash(password, levelHash);
+
+    const newUser = new User({
+      email,
+      password: hashPass,
+      username,
+      fullname,
+      phoneNumber,
+    });
+
+    const user = await newUser.save();
+    res.send(user);
     res.send("User Registered Successfully");
   } catch (error) {
-    return res.status(400).json({ error });
+    return res.status(400).json({ error: error.message });
   }
 });
 
