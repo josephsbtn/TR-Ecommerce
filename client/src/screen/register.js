@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import LoginDesign from "../component/design/loginDesign";
 import axios from "axios";
 import Lihat from "../component/icon/Lihat";
+import Logo from "../component/design/logo";
 import GakLihat from "../component/icon/GakLihat";
 import TopPopUp from "../component/notification/topPopUp";
 
@@ -69,8 +70,8 @@ function Register() {
         <TopPopUp show={show} onClose={() => setShow(false)}>
           <div>HALLOO</div>
         </TopPopUp>
-        <div className="h-full w-1/3 flex flex-col bg-myGold items-center justify-center">
-          <img alt="LOGO" src="../component/icon/logo.png" />
+        <div className="h-full w-1/3 flex flex-col bg-myBlue items-center justify-center">
+          <Logo />
           <LoginDesign />
         </div>
 
