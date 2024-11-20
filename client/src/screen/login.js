@@ -6,7 +6,7 @@ function Login() {
     <>
       <section className="flex  h-screen w-full bg-white  justify-center items-center space-x-16">
         <header className="absolute top-4 left-4">
-          <h1 className="text-3xl font-bold text-[#BF953F]">
+          <h1 className="text-3xl font-bold tesxt-[#BF953F]">
             Rose of Sharon <span className="text-[#F4E2D8]">Jewelry</span>
           </h1>
         </header>
