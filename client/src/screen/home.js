@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../component/design/navbar";
-import SideNavbar from "../component/design/sideNavbar";
+import SideNavUser from "../component/design/SideNavUser";
+import HomeIcon from "../component/icon/HomeIcon";
 function Home() {
   const [open, setOpen] = useState(false);
   return (
     <>
       <section className="flex flex-col w-full h-auto">
         <div>
-          <SideNavbar open={open} />
+          <SideNavUser open={open} onClose={() => setOpen(false)} />
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
         <div className="h-screen w-full" onClick={() => setOpen(false)}></div>
