@@ -1,16 +1,16 @@
 import React from "react";
 import LoginDesign from "../component/design/loginDesign";
-
+import Logo from "../component/design/logo";
 function Login() {
   return (
     <>
       <section className="flex  h-screen w-full bg-white  justify-center items-center space-x-16">
-        <header className="absolute top-4 left-4">
-          <h1 className="text-3xl font-bold tesxt-[#BF953F]">
-            Rose of Sharon <span className="text-[#F4E2D8]">Jewelry</span>
-          </h1>
-        </header>
-        <LoginDesign />
+        <div className="absolute top-2 left-4">
+          <Logo />
+        </div>
+        <div className="mt-16">
+          <LoginDesign />
+        </div>
 
         <div className="flex flex-col w-1/3 h-fit  p-4 justify-center items-center bg-myBlue ">
           <div>
