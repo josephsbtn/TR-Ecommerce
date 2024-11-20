@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import LoginDesign from "../component/design/loginDesign";
+import RegisDesign from "../component/design/regisDesign";
 import axios from "axios";
 import Lihat from "../component/icon/Lihat";
 import Logo from "../component/design/logo";
 import GakLihat from "../component/icon/GakLihat";
 import TopPopUp from "../component/notification/topPopUp";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ function Register() {
   const [fullname, setFullname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ function Register() {
       if (confirmPassword != password) {
         throw new Error("Passwords do not match");
       }
-
+      setShow(false);
       setLoading(true);
 
       const newUser = {
@@ -55,24 +56,49 @@ function Register() {
       console.log(result);
       setLoading(false);
       setSuccess("Registration Successful!!");
-      setError(""); // Clear any existing error
+      setShow(true);
+      setError("");
     } catch (error) {
+      setShow(true);
       setLoading(false);
-      setSuccess(""); // Clear any existing success message
+      setSuccess("");
       setError(error.message || "Something went wrong");
+      setShow(true);
       console.error(error);
     }
   };
 
+  useEffect(() => {
+    if (show) {
+      const timer = setTimeout(() => setShow(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [show]);
+
   return (
     <>
-      <section className="flex h-screen w-full justify-center items-center space-x-28">
+      <section className="flex h-screen w-full justify-center  space-x-28">
         <TopPopUp show={show} onClose={() => setShow(false)}>
-          <div>HALLOO</div>
+          {success ? (
+            <div>
+              <p className="text-green-500">{success}</p>
+            </div>
+          ) : error ? (
+            <div>
+              <p className="text-red-500">{error}</p>
+            </div>
+          ) : null}
         </TopPopUp>
+
+        <button className="w-fit flex justify-start bg-red-800 h-fit mt-20 ">
+          BACK
+        </button>
         <div className="h-full w-1/3 flex flex-col bg-myBlue items-center justify-center">
-          <Logo />
-          <LoginDesign />
+          <div className="flex w-full items-center justify-start scale-90">
+            <Logo />
+          </div>
+
+          <RegisDesign />
         </div>
 
         <div className="flex flex-col w-1/3 h-screen p-4 justify-center items-center">
@@ -156,6 +182,11 @@ function Register() {
                 </div>
               </div>
             </div>
+            <Link to={"/login"}>
+              <h1 className="font-montserrat w-fit text-sm text-myBlue hover:border-b-2 border-myGold transition-all duration-100">
+                Have an Account?
+              </h1>
+            </Link>
 
             <button
               type="submit"
