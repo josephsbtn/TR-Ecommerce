@@ -3,6 +3,7 @@ import LoginDesign from "../component/design/loginDesign";
 import axios from "axios";
 import Lihat from "../component/icon/Lihat";
 import GakLihat from "../component/icon/GakLihat";
+import TopPopUp from "../component/notification/topPopUp";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -11,6 +12,8 @@ function Register() {
   const [username, setUsername] = useState("");
   const [fullname, setFullname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [show, setShow] = useState(true);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -63,6 +66,9 @@ function Register() {
   return (
     <>
       <section className="flex h-screen w-full justify-center items-center space-x-28">
+        <TopPopUp show={show} onClose={() => setShow(false)}>
+          <div>HALLOO</div>
+        </TopPopUp>
         <div className="h-full w-1/3 flex flex-col bg-myGold items-center justify-center">
           <img alt="LOGO" src="../component/icon/logo.png" />
           <LoginDesign />
