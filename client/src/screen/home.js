@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../component/design/navbar";
 import SideNavUser from "../component/design/SideNavUser";
-import HomeIcon from "../component/icon/HomeIcon";
+
 function Home() {
   const [open, setOpen] = useState(false);
   return (

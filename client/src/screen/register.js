@@ -5,6 +5,7 @@ import Lihat from "../component/icon/Lihat";
 import Logo from "../component/design/logo";
 import GakLihat from "../component/icon/GakLihat";
 import TopPopUp from "../component/notification/topPopUp";
+import HomeIcon from "../component/icon/HomeIcon";
 import { Link } from "react-router-dom";
 
 function Register() {
@@ -22,6 +23,10 @@ function Register() {
   const [success, setSuccess] = useState("");
   const [visible, setVisible] = useState(false);
   const [visibleRepeat, setVisibleRepeat] = useState(false);
+
+  const Back = () => {
+    window.location.href = "/";
+  };
 
   const SubmitHandler = async (e) => {
     e.preventDefault();
@@ -89,10 +94,6 @@ function Register() {
             </div>
           ) : null}
         </TopPopUp>
-
-        <button className="w-fit flex justify-start bg-red-800 h-fit mt-20 ">
-          BACK
-        </button>
         <div className="h-full w-1/3 flex flex-col bg-myBlue items-center justify-center">
           <div className="flex w-full items-center justify-start scale-90">
             <Logo />
@@ -102,6 +103,9 @@ function Register() {
         </div>
 
         <div className="flex flex-col w-1/3 h-screen p-4 justify-center items-center">
+          <button className="w-full flex justify-end h-fit mt-3" onClick={Back}>
+            <h1 className="text-2xl font-montserrat ">X</h1>
+          </button>
           <form
             className="flex flex-col w-full p-4 space-y-4"
             onSubmit={SubmitHandler}>
