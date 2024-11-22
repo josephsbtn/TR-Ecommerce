@@ -19,10 +19,10 @@ function Login() {
     try {
       setLoading(true);
       const res = (await axios.post("/api/users/login", user)).data;
-      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      localStorage.setItem("currentUser", JSON.stringify(res));
 
       if (res.isAdmin) {
-        window.location.href = "/dasboard";
+        window.location.href = "/dashboard";
       } else {
         window.location.href = "/home";
       }

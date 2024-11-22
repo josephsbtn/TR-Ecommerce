@@ -8,13 +8,18 @@ router.get("/getallcategories", async (req, res) => {
     const cat = await Category.find({});
     res.send(cat);
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: error.message });
   }
 });
 
 router.post("/addCategory", async (req, res) => {
   try {
-    const cat = await Category.create(req.body);
+    const { name } = req.body;
+    const isSame = await Category.findOne({ name });
+    if (isSame) {
+      return res.status(500).json("Theres already a category with this name");
+    }
+    const cat = await Category.create({ name });
     res.send(cat);
   } catch (error) {
     console.log(error);
@@ -23,10 +28,14 @@ router.post("/addCategory", async (req, res) => {
 
 router.delete("/deleteCategory", async (req, res) => {
   try {
-    const deleteCategory = await Category.findByIdAndDelete(req.body.catId);
+    const { id } = req.body;
+    const deleteCategory = await Category.findByIdAndDelete(id);
+    if (!deleteCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
     res.send(deleteCategory);
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: error.message });
   }
 });
 
@@ -40,7 +49,7 @@ router.put("/updateCategory", async (req, res) => {
     res.send(updateCategory);
   } catch (error) {
     console.log(error);
-    res.send(error);
+    return res.status(500).json({ message: error.message });
   }
 });
 

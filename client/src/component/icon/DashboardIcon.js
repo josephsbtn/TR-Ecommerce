@@ -1,6 +1,6 @@
 import React from "react";
 
-function Dashboard() {
+function DashboardIcon() {
   return (
     <>
       <svg
@@ -18,4 +18,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DashboardIcon;
