@@ -52,7 +52,6 @@ function AddItem() {
         <Navbar OnOpen={() => setOpen(!open)} />
         <div className="h-auto w-full p-10" onClick={() => setOpen(false)}>
           <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 w-full">
-            {/* Product Image Section */}
             <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
               <h3 className="text-xl font-semibold mb-4">Product Image</h3>
               <div className="flex flex-col space-y-4">
@@ -87,7 +86,6 @@ function AddItem() {
               </div>
             </div>
 
-            {/* General Information Section */}
             <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
               <h3 className="text-xl font-semibold mb-4">
                 General Information
