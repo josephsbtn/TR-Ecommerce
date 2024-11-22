@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import Navbar from "../../component/design/navbar";
 import SideNavbar from "../../component/design/sideNavbar";
+
 function AddItem() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
+  const [productType, setProductType] = useState("Rings");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-
   const [error, setError] = useState(false);
+
   function convertBase64(e) {
     const file = e.target.files[0];
     if (!file) {
@@ -46,7 +50,106 @@ function AddItem() {
           <SideNavbar open={open} />
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
-        <div className="h-screen w-full" onClick={() => setOpen(false)}></div>
+        <div className="h-auto w-full p-10" onClick={() => setOpen(false)}>
+          <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 w-full">
+            {/* Product Image Section */}
+            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
+              <h3 className="text-xl font-semibold mb-4">Product Image</h3>
+              <div className="flex flex-col space-y-4">
+                {image ? (
+                  <img
+                    src={image}
+                    alt="Uploaded Preview"
+                    className="w-full h-48 object-cover rounded-md border"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-gray-200 rounded-md flex items-center justify-center text-gray-600">
+                    + Add Image
+                  </div>
+                )}
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => setImage("")}
+                    className="px-4 py-2 bg-red-600 text-white rounded-md"
+                  >
+                    Remove
+                  </button>
+                  <label className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer">
+                    Replace
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={convertBase64}
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* General Information Section */}
+            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
+              <h3 className="text-xl font-semibold mb-4">
+                General Information
+              </h3>
+              <form className="flex flex-col space-y-4">
+                <div>
+                  <label className="block text-gray-700 mb-1">
+                    Product Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-2 border rounded-md"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter product name"
+                    required
+                  />
+                </div>
+                <div className="flex space-x-4">
+                  <div className="w-1/2">
+                    <label className="block text-gray-700 mb-1">
+                      Product Type
+                    </label>
+                    <select
+                      className="w-full p-2 border rounded-md"
+                      value={productType}
+                      onChange={(e) => setProductType(e.target.value)}
+                    >
+                      <option value="Rings">Rings</option>
+                      <option value="Necklaces">Necklaces</option>
+                      <option value="Earrings">Earrings</option>
+                      <option value="Bracelets">Bracelets</option>
+                    </select>
+                  </div>
+                  <div className="w-1/2">
+                    <label className="block text-gray-700 mb-1">Price</label>
+                    <input
+                      type="number"
+                      className="w-full p-2 border rounded-md"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                      placeholder="Enter price"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-gray-700 mb-1">
+                    Product Description
+                  </label>
+                  <textarea
+                    className="w-full p-2 border rounded-md"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Enter product description"
+                    rows="4"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );
