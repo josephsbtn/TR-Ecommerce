@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../component/design/navbar";
-import SideNavbar from "../../component/design/sideNavbar";
-
+import SideNavUser from "../../component/design/SideNavUser";
 function AddItem() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -47,7 +46,7 @@ function AddItem() {
     <>
       <section className="flex flex-col w-full h-auto">
         <div>
-          <SideNavbar open={open} />
+          <SideNavUser open={open} />
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
         <div className="h-auto w-full p-10" onClick={() => setOpen(false)}>
@@ -69,8 +68,7 @@ function AddItem() {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setImage("")}
-                    className="px-4 py-2 bg-red-600 text-white rounded-md"
-                  >
+                    className="px-4 py-2 bg-red-600 text-white rounded-md">
                     Remove
                   </button>
                   <label className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer">
@@ -112,8 +110,7 @@ function AddItem() {
                     <select
                       className="w-full p-2 border rounded-md"
                       value={productType}
-                      onChange={(e) => setProductType(e.target.value)}
-                    >
+                      onChange={(e) => setProductType(e.target.value)}>
                       <option value="Rings">Rings</option>
                       <option value="Necklaces">Necklaces</option>
                       <option value="Earrings">Earrings</option>
