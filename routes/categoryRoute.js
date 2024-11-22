@@ -17,7 +17,9 @@ router.post("/addCategory", async (req, res) => {
     const { name } = req.body;
     const isSame = await Category.findOne({ name });
     if (isSame) {
-      return res.status(500).json("Theres already a category with this name");
+      return res
+        .status(400)
+        .json({ message: "There's already a category with this name" });
     }
     const cat = await Category.create({ name });
     res.send(cat);
