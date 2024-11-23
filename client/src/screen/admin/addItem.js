@@ -81,7 +81,8 @@ function AddItem() {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setImage("")}
-                    className="px-4 py-2 bg-red-600 text-white rounded-md">
+                    className="px-4 py-2 bg-red-600 text-white rounded-md"
+                  >
                     Remove
                   </button>
                   <label className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer">
@@ -123,7 +124,8 @@ function AddItem() {
                     <select
                       className="w-full p-2 border rounded-md"
                       value={productType}
-                      onChange={(e) => setProductType(e.target.value)}>
+                      onChange={(e) => setProductType(e.target.value)}
+                    >
                       <option value="Rings">Rings</option>
                       <option value="Necklaces">Necklaces</option>
                       <option value="Earrings">Earrings</option>
