@@ -36,4 +36,8 @@ router.post("/addItem", async (req, res) => {
   }
 });
 
+router.post("/getItemById", async (req, res) => {
+  
+})
+
 module.exports = router;

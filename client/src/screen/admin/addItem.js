@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../component/design/navbar";
 import SideNavUser from "../../component/design/SideNavUser";
+import axios from "axios";
 function AddItem() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -8,7 +9,19 @@ function AddItem() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [category, setCategory] = useState;
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchCat = async () => {
+      try {
+        const cat = await axios.get("/api/categories/get")
+      } catch (error) {
+        console.error(error);
+        setError(error.message);
+      }
+    };
+  });
 
   function convertBase64(e) {
     const file = e.target.files[0];

@@ -28,8 +28,8 @@ function Dashboard() {
       const response = await axios.delete("/api/categories/deleteCategory", {
         data: { id: thisId },
       });
-      setKategori(kategori.filter((cat) => cat._id !== thisId)); // Update the list after deletion
       console.log("Deleted category: ", response.data);
+      setKategori(kategori.filter((kate) => kate._id !== thisId));
     } catch (error) {
       setError(error.message);
     }
@@ -45,9 +45,9 @@ function Dashboard() {
       const added = (
         await axios.post("/api/categories/addCategory", { name: namaKat })
       ).data;
-      setKategori([...kategori, added]); // Add the new category to the list
-      setNamaKat(""); // Clear input field
-      setSuccess(true); // Show success message
+      setKategori([...kategori, added]);
+      setNamaKat("");
+      setSuccess(true);
     } catch (error) {
       setError(error.response?.data?.message || error.message);
     }
@@ -60,14 +60,12 @@ function Dashboard() {
         setError("Nama kategori tidak boleh kosong");
         return false;
       }
-      const updatedCategory = await axios.put(
-        "/api/categories/updateCategory",
-        {
-          catId: editedCatId,
-          name: editedCat,
-        }
-      );
+      const update = await axios.put("/api/categories/updateCategory", {
+        catId: editedCatId,
+        name: editedCat,
+      });
 
+      console.log(update);
       window.location.reload();
       setIsEditing(false);
     } catch (error) {
@@ -135,7 +133,6 @@ function Dashboard() {
         <Navbar OnOpen={() => setOpen(!open)} />
         <div className="h-screen w-full" onClick={() => setOpen(false)}>
           <div className="flex flex-col w-full items-center mt-16 h-screen bg-anotherGrey">
-            {/* Dashboard summary */}
             <div className="flex justify-between items-center w-auto h-fit my-10 space-x-20">
               <div className="flex flex-col items-start justify-center space-y-2 h-full w-60 bg-slate-700 p-4 rounded-2xl">
                 <BigUserIcon />
@@ -165,7 +162,7 @@ function Dashboard() {
                 </h1>
               </div>
             </div>
-            <div className="flex flex-col w-80 h-96 bg-white rounded-xl overflow-y-scroll">
+            <div className="flex flex-col w-[22rem] h-96 bg-white rounded-xl overflow-y-scroll scrollbar-none">
               <h1 className="font-montserrat text-base text-myBlue p-2 ml-3 mt-2 font-medium">
                 Kategori
               </h1>
@@ -181,7 +178,7 @@ function Dashboard() {
                 />
                 <button
                   type="submit"
-                  className="bg-myBlue text-xs text-white font-montserrat p-3 rounded-full hover:bg">
+                  className="bg-myBlue hover:bg-blue-700 text-xs text-white font-montserrat p-3 rounded-full hover:bg">
                   TAMBAH
                 </button>
               </form>
@@ -190,12 +187,16 @@ function Dashboard() {
                   {error}
                 </h1>
               )}
-              {succes && <h1>BERHASIL MENAMBAHKAN KATEGORI</h1>}
-              <div className="flex flex-col space-y-2 border-t border-myGold">
+              {succes && (
+                <h1 className=" text-xs text-myGold bg-myBlue font-montserrat text-center p-1 rounded-full">
+                  BERHASIL MENAMBAHKAN KATEGORI
+                </h1>
+              )}
+              <div className="flex flex-col space-y-2 border-t border-myBlue">
                 {kategori.map((kategoris) => (
                   <div
                     key={kategoris._id}
-                    className="w-full flex justify-between h-fit py-2 border-b-2 border-myBlue">
+                    className="w-full flex justify-between h-fit py-2 border-b border-myBlue">
                     <h1 className="font-montserrat text-sm text-myBlue p-2 ml-2">
                       {kategoris.name}
                     </h1>

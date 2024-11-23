@@ -70,7 +70,7 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">Dashboard</h1>
             </div>
           </Link>
-          <Link to={"/listItem"}>
+          <Link to={"/listProducts"}>
             <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
               <ProductsIcon />
               <h1 className="text-sm text-white font-montserrat">

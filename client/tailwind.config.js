@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bgColor: "#F8F9FA", // Replace "#" with a valid color value
+        bgColor: "#F8F9FA",
         myBlue: "#023047",
-        myGold: "#C6A231", // Corrected "myGlod" to "myGold"
+        myGold: "#C6A231",
         anotherGrey: "#E7ECEF",
       },
       fontFamily: {
@@ -15,5 +15,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwind-scrollbar"), 
+  ],
 };

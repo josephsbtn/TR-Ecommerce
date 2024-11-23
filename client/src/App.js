@@ -5,6 +5,8 @@ import Login from "./screen/login";
 import Register from "./screen/register";
 import AddItem from "./screen/admin/addItem";
 import Dashboard from "./screen/admin/dashboard";
+import ListItem from "./screen/admin/listItem";
+
 function App() {
   return (
     <div className="App w-full">
@@ -15,6 +17,7 @@ function App() {
           <Route path="/register" exact Component={Register} />
           <Route path="/dashboard" exact Component={Dashboard} />
           <Route path="/addItem" exact Component={AddItem} />
+          <Route path="/listProducts" exact Component={ListItem} />
         </Routes>
       </BrowserRouter>
     </div>
