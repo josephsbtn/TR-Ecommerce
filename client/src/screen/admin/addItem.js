@@ -9,13 +9,13 @@ function AddItem() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [category, setCategory] = useState;
+  const [category, setCategory] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchCat = async () => {
       try {
-        const cat = await axios.get("/api/categories/get")
+        const cat = await axios.get("/api/categories/get");
       } catch (error) {
         console.error(error);
         setError(error.message);
