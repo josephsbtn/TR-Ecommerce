@@ -11,6 +11,7 @@ function Home() {
           <SideNavUser open={open} onClose={() => setOpen(false)} />
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
+
         <div className="h-screen w-full" onClick={() => setOpen(false)}></div>
       </section>
     </>

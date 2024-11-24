@@ -6,6 +6,7 @@ import Register from "./screen/register";
 import AddItem from "./screen/admin/addItem";
 import Dashboard from "./screen/admin/dashboard";
 import ListItem from "./screen/admin/listItem";
+import Cart from "./screen/user/cart";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/dashboard" exact Component={Dashboard} />
           <Route path="/addItem" exact Component={AddItem} />
           <Route path="/listProducts" exact Component={ListItem} />
+          <Route path="/cart/:userId" exact Component={Cart} />
         </Routes>
       </BrowserRouter>
     </div>

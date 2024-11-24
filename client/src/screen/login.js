@@ -2,16 +2,28 @@ import React, { useState, useEffect } from "react";
 import LoginDesign from "../component/design/loginDesign";
 import Logo from "../component/design/logo";
 import { Link } from "react-router-dom";
+import TopPopUp from "../component/notification/topPopUp";
 import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [success, setSucces] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      const timer = setTimeout(() => setOpen(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
 
   const submitLogin = async (e) => {
     e.preventDefault();
+
     const user = {
       email: email,
       password: password,
@@ -20,6 +32,9 @@ function Login() {
       setLoading(true);
       const res = (await axios.post("/api/users/login", user)).data;
       localStorage.setItem("currentUser", JSON.stringify(res));
+      setSucces("Login Successful");
+      console.log(success);
+      setOpen(true);
 
       if (res.isAdmin) {
         window.location.href = "/dashboard";
@@ -28,7 +43,9 @@ function Login() {
       }
       setLoading(false);
     } catch (error) {
-      setError(error.response.data.message);
+      setOpen(true);
+      setError(error.response?.data?.message || error.message);
+      console.log(error);
       setLoading(false);
     }
   };
@@ -36,6 +53,18 @@ function Login() {
   return (
     <>
       <section className="flex  h-screen w-full bg-white  justify-center items-center space-x-16">
+        <TopPopUp show={open} onClose={() => setOpen(false)}>
+          {success ? (
+            <div className="bg-green-900">
+              <p className="text-green-500">{success}</p>
+            </div>
+          ) : error ? (
+            <div className="bg-red-800">
+              <p className="text-red-500">{error}</p>
+            </div>
+          ) : null}
+        </TopPopUp>
+
         <div className="absolute top-2 left-4">
           <Logo />
         </div>

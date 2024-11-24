@@ -15,13 +15,17 @@ function AddItem() {
   useEffect(() => {
     const fetchCat = async () => {
       try {
-        const cat = await axios.get("/api/categories/get");
+        const cat = (await axios.get("/api/categories/getallcategories")).data;
+        setCategory(cat);
+        console.log("categories", cat);
       } catch (error) {
         console.error(error);
         setError(error.message);
       }
     };
-  });
+
+    fetchCat();
+  }, []);
 
   function convertBase64(e) {
     const file = e.target.files[0];
@@ -62,30 +66,33 @@ function AddItem() {
           <SideNavUser open={open} />
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
-        <div className="h-auto w-full p-10" onClick={() => setOpen(false)}>
-          <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 w-full">
+        <div
+          className="h-screen w-full p-10 flex items-center justify-center"
+          onClick={() => setOpen(false)}>
+          <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 w-full mt-10">
             <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Product Image</h3>
+              <h3 className="text-xl font-semibold mb-4 font-montserrat">
+                Product Image
+              </h3>
               <div className="flex flex-col space-y-4">
                 {image ? (
                   <img
                     src={image}
                     alt="Uploaded Preview"
-                    className="w-full h-48 object-cover rounded-md border"
+                    className="w-full h-80 object-cover rounded-md border"
                   />
                 ) : (
-                  <div className="w-full h-48 bg-gray-200 rounded-md flex items-center justify-center text-gray-600">
+                  <div className="w-full h-48 bg-gray-200 rounded-md font-montserrat  flex items-center justify-center text-gray-600">
                     + Add Image
                   </div>
                 )}
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setImage("")}
-                    className="px-4 py-2 bg-red-600 text-white rounded-md"
-                  >
+                    className="px-4 py-2 bg-red-600 font-montserrat  text-white rounded-md">
                     Remove
                   </button>
-                  <label className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer">
+                  <label className="px-4 py-2 font-montserrat bg-blue-600 text-white rounded-md cursor-pointer">
                     Replace
                     <input
                       type="file"
@@ -99,17 +106,17 @@ function AddItem() {
             </div>
 
             <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
-              <h3 className="text-xl font-semibold mb-4">
+              <h3 className="text-xl font-montserrat font-semibold mb-4">
                 General Information
               </h3>
               <form className="flex flex-col space-y-4">
                 <div>
-                  <label className="block text-gray-700 mb-1">
+                  <label className="block font-montserrat text-gray-700 mb-1">
                     Product Name
                   </label>
                   <input
                     type="text"
-                    className="w-full p-2 border rounded-md"
+                    className="w-full p-2 border rounded-md font-montserrat"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter product name"
@@ -118,18 +125,22 @@ function AddItem() {
                 </div>
                 <div className="flex space-x-4">
                   <div className="w-1/2">
-                    <label className="block text-gray-700 mb-1">
+                    <label className="block text-gray-700 mb-1 font-montserrat">
                       Product Type
                     </label>
                     <select
                       className="w-full p-2 border rounded-md"
                       value={productType}
-                      onChange={(e) => setProductType(e.target.value)}
-                    >
-                      <option value="Rings">Rings</option>
-                      <option value="Necklaces">Necklaces</option>
-                      <option value="Earrings">Earrings</option>
-                      <option value="Bracelets">Bracelets</option>
+                      onChange={(e) => setProductType(e.target.value)}>
+                      <option value="">Select Product Type</option>
+                      {category.map((cat) => (
+                        <option
+                          className="font-montserrat text-sm"
+                          value={cat.name}
+                          key={cat._id}>
+                          {cat.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div className="w-1/2">

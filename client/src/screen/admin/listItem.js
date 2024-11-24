@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SideNavUser from "../../component/design/SideNavUser";
 import Navbar from "../../component/design/navbar";
+import ProductsIcon from "../../component/icon/ProductsIcon";
+import { Link } from "react-router-dom";
 
 function ListItem() {
   const [items, setItems] = useState([]);
@@ -25,6 +27,15 @@ function ListItem() {
               />
               <h1>ITEM NAME</h1>
             </div>
+
+            <Link to={"/addItem"}>
+              <button className="flex fixed items-center justify-center bg-slate-700 p-4 rounded-2xl right-4 bottom-4 hover:bg-myGold transition-all duration-200 text-white space-x-4">
+                <ProductsIcon />
+                <h1 className="font-montserrat text-base font-semibold ">
+                  Add Products
+                </h1>
+              </button>
+            </Link>
           </div>
         </div>
       </section>

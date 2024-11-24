@@ -6,8 +6,17 @@ import Search from "../icon/Search";
 import { Link } from "react-router-dom";
 
 function Navbar({ OnOpen }) {
+  let user = null;
+  try {
+    const storedUser = localStorage.getItem("currentUser");
+    user = storedUser ? JSON.parse(storedUser) : null;
+
+    console.log("user", user);
+  } catch (error) {
+    console.error("Error parsing user data:", error);
+  }
   return (
-    <div className="flex bg-myBlue w-full h-16 items-center fixed justify-between px-4 py-2">
+    <div className="flex bg-myBlue w-full h-16 items-center fixed justify-between">
       <button className="z-20 flex items-center scale-90" onClick={OnOpen}>
         <HamburgerMenu />
       </button>
@@ -20,7 +29,13 @@ function Navbar({ OnOpen }) {
 
       <div className="flex scale-75 items-center space-x-6">
         <Search />
-        <Bag />
+        {user ? (
+          !user.isAdmin ? (
+            <>
+              <Bag />
+            </>
+          ) : null
+        ) : null}
       </div>
     </div>
   );
