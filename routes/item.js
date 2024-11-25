@@ -21,23 +21,24 @@ router.post("/addItem", async (req, res) => {
     image: req.body.image,
   };
   try {
-    if (Item.findOne(item.name)) {
+    const isSame = await Item.findOne({ name: item.name });
+    if (isSame) {
       return res.status(400).json({ message: "Item already exists" });
     }
 
-    if (item.price < 1) {
-      return res.status(400).json({ message: "Price cannot less than Rp 1" });
+    if (Number(item.price) < 100000) {
+      return res
+        .status(400)
+        .json({ message: "Price cannot less than Rp 100.000" });
     }
 
-    const newItem = new Item(item);
+    const newItem = await Item.create(item);
     res.send(newItem);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 });
 
-router.post("/getItemById", async (req, res) => {
-  
-})
+router.post("/getItemById", async (req, res) => {});
 
 module.exports = router;

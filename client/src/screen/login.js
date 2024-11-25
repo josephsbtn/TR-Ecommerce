@@ -53,18 +53,6 @@ function Login() {
   return (
     <>
       <section className="flex  h-screen w-full bg-white  justify-center items-center space-x-16">
-        <TopPopUp show={open} onClose={() => setOpen(false)}>
-          {success ? (
-            <div className="bg-green-900">
-              <p className="text-green-500">{success}</p>
-            </div>
-          ) : error ? (
-            <div className="bg-red-800">
-              <p className="text-red-500">{error}</p>
-            </div>
-          ) : null}
-        </TopPopUp>
-
         <div className="absolute top-2 left-4">
           <Logo />
         </div>
@@ -109,6 +97,19 @@ function Login() {
               </button>
             </div>
           </form>
+          {success ? (
+            <div className=" bg-green-800 shadow-xl rounded-lg w-fit py-1 px-2 h-fit flex  items-start justify-center">
+              <p className=" text-white text-center font-medium font-montserrat text-base">
+                {success}
+              </p>
+            </div>
+          ) : error ? (
+            <div className=" bg-red-800 shadow-xl rounded-lg w-fit py-1 px-2 h-fit flex  items-start justify-center">
+              <p className=" text-white text-center font-medium font-montserrat text-base">
+                {error}
+              </p>
+            </div>
+          ) : null}
         </div>
       </section>
     </>

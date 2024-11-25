@@ -10,7 +10,7 @@ function AddItem() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchCat = async () => {
@@ -36,15 +36,13 @@ function AddItem() {
     }
     const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (!validImageTypes.includes(file.type)) {
-      setError(true);
-      console.log("Invalid file type. Only JPEG and PNG files are allowed.");
+      setError("Invalid file type. Only JPEG and PNG files are allowed.");
       return;
     }
 
     const maxSize = 2 * 1024 * 1024;
     if (file.size > maxSize) {
-      setError(true);
-      console.log("File is too large. Maximum file size is 2MB.");
+      setError("File is too large. Maximum file size is 5MB.");
       return;
     }
     try {
@@ -58,6 +56,35 @@ function AddItem() {
       console.log("Error: ", error);
     }
   }
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const item = {
+      category: productType,
+      name: name,
+      price: price,
+      description: description,
+      image: image,
+    };
+
+    if (!category || !name || !price || !description || !image) {
+      setError("Fill all fields!!");
+      return;
+    }
+
+    try {
+      const res = (await axios.post("/api/items/addItem", item)).data;
+      console.log(res);
+      setProductType("");
+      setName("");
+      setDescription("");
+      setPrice("");
+      setImage("");
+    } catch (error) {
+      setError(error.response?.data?.message || error.message);
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -93,7 +120,7 @@ function AddItem() {
                     Remove
                   </button>
                   <label className="px-4 py-2 font-montserrat bg-blue-600 text-white rounded-md cursor-pointer">
-                    Replace
+                    Add
                     <input
                       type="file"
                       accept="image/*"
@@ -109,7 +136,9 @@ function AddItem() {
               <h3 className="text-xl font-montserrat font-semibold mb-4">
                 General Information
               </h3>
-              <form className="flex flex-col space-y-4">
+              <form
+                onSubmit={submitHandler}
+                className="flex flex-col space-y-4">
                 <div>
                   <label className="block font-montserrat text-gray-700 mb-1">
                     Product Name
@@ -120,7 +149,7 @@ function AddItem() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter product name"
-                    required
+                    requiredq
                   />
                 </div>
                 <div className="flex space-x-4">
@@ -129,14 +158,14 @@ function AddItem() {
                       Product Type
                     </label>
                     <select
-                      className="w-full p-2 border rounded-md"
+                      className="w-full p-2 border font-montserrat rounded-md"
                       value={productType}
                       onChange={(e) => setProductType(e.target.value)}>
                       <option value="">Select Product Type</option>
                       {category.map((cat) => (
                         <option
                           className="font-montserrat text-sm"
-                          value={cat.name}
+                          value={cat._id}
                           key={cat._id}>
                           {cat.name}
                         </option>
@@ -144,10 +173,12 @@ function AddItem() {
                     </select>
                   </div>
                   <div className="w-1/2">
-                    <label className="block text-gray-700 mb-1">Price</label>
+                    <label className="block text-gray-700 font-montserrat mb-1">
+                      Price
+                    </label>
                     <input
                       type="number"
-                      className="w-full p-2 border rounded-md"
+                      className="w-full p-2 border font-montserrat rounded-md"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
                       placeholder="Enter price"
@@ -156,17 +187,22 @@ function AddItem() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-gray-700 mb-1">
+                  <label className="block text-gray-700 font-montserrat mb-1">
                     Product Description
                   </label>
                   <textarea
-                    className="w-full p-2 border rounded-md"
+                    className="w-full p-2 border rounded-md font-montserrat"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Enter product description"
                     rows="4"
                   />
                 </div>
+                <button
+                  type="submit"
+                  className="bg-myBlue text-white p-1 rounded-xl font-montserrat font-medium ">
+                  Add Item
+                </button>
               </form>
             </div>
           </div>

@@ -40,6 +40,7 @@ function Cart() {
         cartId: cartId,
         itemId: itemId,
       });
+      console.log(update);
     } catch (error) {
       setError(error.response?.data?.message || error.message);
     }

@@ -10,8 +10,6 @@ function Navbar({ OnOpen }) {
   try {
     const storedUser = localStorage.getItem("currentUser");
     user = storedUser ? JSON.parse(storedUser) : null;
-
-    console.log("user", user);
   } catch (error) {
     console.error("Error parsing user data:", error);
   }
