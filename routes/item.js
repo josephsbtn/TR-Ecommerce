@@ -12,6 +12,16 @@ router.get("/getAllItem", async (req, res) => {
   }
 });
 
+router.get("/itemsById", async (req, res) => {
+  const id = req.body.itemId;
+  try {
+    const item = await Item.findById(id);
+    res.send(item);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 router.post("/addItem", async (req, res) => {
   const item = {
     category: req.body.category,
@@ -39,6 +49,22 @@ router.post("/addItem", async (req, res) => {
   }
 });
 
-router.post("/getItemById", async (req, res) => {});
+router.post("/editItem", async (req, res) => {
+  try {
+    const id = req.body.itemId;
+    const item = {
+      category: req.body.category,
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description,
+      image: req.body.image,
+    };
+
+    const res = await Item.findByIdAndUpdate(id, item);
+    res.send(res);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;

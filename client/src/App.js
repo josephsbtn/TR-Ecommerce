@@ -7,6 +7,7 @@ import AddItem from "./screen/admin/addItem";
 import Dashboard from "./screen/admin/dashboard";
 import ListItem from "./screen/admin/listItem";
 import Cart from "./screen/user/cart";
+import DetailItem from "./screen/user/detailItem";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/addItem" exact Component={AddItem} />
           <Route path="/listProducts" exact Component={ListItem} />
           <Route path="/cart/:userId" exact Component={Cart} />
+          <Route path="/detailItem/:itemId" exact Component={DetailItem} />
         </Routes>
       </BrowserRouter>
     </div>

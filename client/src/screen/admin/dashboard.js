@@ -77,6 +77,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        
       } catch (error) {
         setError(error.message);
       }
