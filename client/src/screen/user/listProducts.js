@@ -4,11 +4,10 @@ import Navbar from "../../component/design/navbar";
 import { Link, useParams } from "react-router-dom";
 import ItemCard from "../../component/design/ItemCard";
 import axios from "axios";
-import BagWhite from "../../component/icon/BagWhite";
 import BagButton from "../../component/design/BagButton";
 
 function ListProducts() {
-  const { userId } = useParams(); // Destructure userId from useParams
+  const { userId } = useParams();
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState("");
@@ -16,7 +15,6 @@ function ListProducts() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // Fetch data when the component mounts
   useEffect(() => {
     const fetchItems = async () => {
       try {

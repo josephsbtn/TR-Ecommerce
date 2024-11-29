@@ -55,4 +55,17 @@ router.put("/updateCategory", async (req, res) => {
   }
 });
 
+router.get("/categoryById/:catID", async (req, res) => {
+  const { catID } = req.params; // Use req.params to get the catID
+  try {
+    const cat = await Category.findById(catID);
+    if (!cat) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.send(cat);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

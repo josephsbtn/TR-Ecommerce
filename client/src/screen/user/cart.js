@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function Cart() {
-  const userId = useParams();
+  const { userId } = useParams();
   const [cart, setCart] = useState();
   const [item, setItem] = useState([]);
   const [total, setTotal] = useState(0);
@@ -14,24 +14,23 @@ function Cart() {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        setLoading(true);
-        const data = (
-          await axios.get("/api/cart/getUserCart", {
-            userId: userId,
-          })
-        ).data;
+        const { data } = await axios.post("/api/cart/getUserCart", {
+          userId: userId,
+        });
         setCart(data);
         setItem(data.items);
-        console.log(data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
+        console.log("Cart:", data);
+        console.log("Item:", data.items);
+      } catch (err) {
+        setError(err.message);
+        console.error("Error fetching cart:", err);
       }
     };
 
-    fetchCart();
-  }, [userId]);
+    if (userId) {
+      fetchCart();
+    }
+  }, [userId, item.quantity]);
 
   const increaseItem = async (itemId) => {
     const cartId = cart._id;
@@ -48,15 +47,20 @@ function Cart() {
 
   return (
     <>
-      {item.map((item) => {
-        <div key={item.itemID}>
-          <h2>{item.itemName}</h2>
-          <p>Price: {item.price}</p>
-          <button> - </button>
-          <p>Quantity: {item.quantity}</p>
-          <button> + </button>
-        </div>;
-      })}
+      <h1>Your Cart</h1>
+      {cart &&
+        item &&
+        item.map((item) => {
+          return (
+            <div key={item.itemID._id}>
+              <h2>{item.itemID.name}</h2>
+              <p>Price: {item.itemID.price}</p>
+              <button onClick={() => increaseItem(item.itemID._id)}> - </button>
+              <p>Quantity: {item.quantity}</p>
+              <button onClick={() => increaseItem(item.itemID._id)}> + </button>
+            </div>
+          );
+        })}
     </>
   );
 }

@@ -77,7 +77,8 @@ function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        
+        const res = (await axios.get("/api/users/getAllUser")).data;
+        setUser(res);
       } catch (error) {
         setError(error.message);
       }
@@ -113,6 +114,7 @@ function Dashboard() {
       }
     };
 
+    fetchUser();
     fetchItem();
     fetchPembelian();
     fetchCat();

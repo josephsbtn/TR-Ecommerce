@@ -2,19 +2,29 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import BagWhite from "../icon/BagWhite";
 import { Link } from "react-router-dom";
+
 function BagButton({ userId }) {
   const [cartItem, setCartItem] = useState([]);
   const [error, setError] = useState(null);
-  const fetchCart = async () => {
-    try {
-      const { data } = await axios.get(`/api/cart/getUserCart/${userId}`);
-      setCartItem(data.items);
-    } catch (err) {
-      setError(err.message);
-      console.error("Error fetching cart:", err);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const { data } = await axios.post("/api/cart/getUserCart", {
+          userId: userId,
+        });
+        setCartItem(data.items);
+      } catch (err) {
+        setError(err.message);
+        console.error("Error fetching cart:", err);
+      }
+    };
+
+    if (userId) {
+      fetchCart();
     }
-  };
-  fetchCart();
+  }, [cartItem, userId]);
+
   return (
     <>
       <Link to={`/cart/${userId}`}>

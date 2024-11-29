@@ -22,11 +22,11 @@ function App() {
           <Route path="/dashboard" exact Component={Dashboard} />
           <Route path="/addItem" exact Component={AddItem} />
           <Route path="/listProducts" exact Component={ListItem} />
-          <Route path="/cart/:userId/:cartId" exact Component={Cart} />
           <Route path="/detailItem/:itemId" exact Component={DetailItem} />
           <Route path="/editItem/:itemId" exact Component={EditItem} />
           <Route path="/home" exact Component={Home} />
           <Route path="/Products/:userId" exact Component={ListProducts} />
+          <Route path="/cart/:userId" exact Component={Cart} />
         </Routes>
       </BrowserRouter>
     </div>

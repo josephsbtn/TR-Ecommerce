@@ -20,7 +20,8 @@ router.post("/getUserCart", async (req, res) => {
 });
 
 router.post("/addItem", async (req, res) => {
-  const { userId, items } = req.body;
+  const { userId, items, subtotal } = req.body;
+
   try {
     if (!userId || !items || !Array.isArray(items)) {
       return res.status(400).json({ message: "Invalid input data" });
@@ -28,6 +29,7 @@ router.post("/addItem", async (req, res) => {
 
     let cart = await Cart.findOne({ userId });
 
+    // If the cart doesn't exist, create a new one
     if (!cart) {
       cart = new Cart({
         userId,
@@ -35,8 +37,10 @@ router.post("/addItem", async (req, res) => {
           itemID: item.itemID,
           quantity: item.quantity || 1,
         })),
+        total: subtotal, // Set the total based on the subtotal passed
       });
     } else {
+      // If cart exists, update the items
       items.forEach((newItem) => {
         if (!newItem.itemID) {
           throw new Error("ItemID is missing in one of the items");
@@ -55,7 +59,11 @@ router.post("/addItem", async (req, res) => {
           });
         }
       });
+
+      // Update the total price of the cart
+      cart.total += subtotal;
     }
+
     const savedCart = await cart.save();
     res.status(200).json(savedCart);
   } catch (error) {

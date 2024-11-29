@@ -119,12 +119,6 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">About Us</h1>
             </div>
           </Link>
-          <Link to={"/myAccount"}>
-            <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
-              <UserIcon />
-              <h1 className="text-sm text-white font-montserrat">My Account</h1>
-            </div>
-          </Link>
           <div
             className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-red-800 duration-150 transition-all cursor-pointer"
             onClick={logout}>

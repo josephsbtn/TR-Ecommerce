@@ -5,10 +5,9 @@ function ItemCard({ item }) {
   return (
     <>
       <Link
-        to={user.isAdmin ? `/editItem/${item._id}` : `/detailItem/${item._id}`}
-      >
+        to={user.isAdmin ? `/editItem/${item._id}` : `/detailItem/${item._id}`}>
         <div className="bg-white w-60 h-full flex flex-col mt-2 p-2 rounded-2xl shadow-xl ">
-          <img src={item.image} className="w-48 h-44 m4" />
+          <img src={item.image} className="w-48 h-44 m-4" />
           <h1 className="ml-4 font-montserrat text-sm font-medium">
             {item.name}
           </h1>
