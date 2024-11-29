@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../component/design/navbar";
 import SideNavUser from "../../component/design/SideNavUser";
 import axios from "axios";
+import ConfirmPopUp from "../../component/notification/confirmPopUp";
+import DashItemIcon from "../../component/icon/DashItemIcon";
+import TopPopUp from "../../component/notification/topPopUp";
 function AddItem() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -10,7 +13,11 @@ function AddItem() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState([]);
+
+  const [notification, setNotification] = useState(false);
+  const [show, setShow] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     const fetchCat = async () => {
@@ -80,7 +87,11 @@ function AddItem() {
       setDescription("");
       setPrice("");
       setImage("");
+      setShow(true);
+      setSuccess("Item added successfully");
+      window.location.href = "/listProducts";
     } catch (error) {
+      setShow(true);
       setError(error.response?.data?.message || error.message);
       console.log(error);
     }
@@ -88,16 +99,48 @@ function AddItem() {
 
   return (
     <>
-      <section className="flex flex-col w-full h-auto">
+      <section className="flex flex-col bg-anotherGrey w-full h-auto">
         <div>
           <SideNavUser open={open} />
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
+        <ConfirmPopUp
+          open={notification}
+          onClose={() => setNotification(false)}>
+          <div className="flex flex-col items-center justify-center h-fit w-fit p-6 rounded-2xl space-y-4">
+            <div className="h-fit w-fit p-4 bg-red-800 rounded-full">
+              <DashItemIcon />
+            </div>
+
+            <h6 className="text-md font-montserrat text-black font-bold text-center ">
+              Are you sure you want <br /> to delete this room?
+            </h6>
+            <div className="flex space-x-4">
+              <button
+                className="bg-red-800 text-white px-4 py-2 rounded-xl font-montserrat font-bold"
+                onClick={submitHandler}>
+                Yes
+              </button>
+              <button onClick={() => setNotification(false)}>No</button>
+            </div>
+          </div>
+        </ConfirmPopUp>
+        <TopPopUp show={show} onClose={() => setShow(false)}>
+          {success ? (
+            <div className="flex p-4 rounded-xl bg-green-800">
+              <p className="text-green-500">{success}</p>
+            </div>
+          ) : error ? (
+            <div>
+              <p className="text-red-500">{error}</p>
+            </div>
+          ) : null}
+        </TopPopUp>
         <div
           className="h-screen w-full p-10 flex items-center justify-center"
           onClick={() => setOpen(false)}>
           <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 w-full mt-10">
-            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
+            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md bg-white">
               <h3 className="text-xl font-semibold mb-4 font-montserrat">
                 Product Image
               </h3>
@@ -132,7 +175,7 @@ function AddItem() {
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
+            <div className="w-full lg:w-1/2 p-5 border rounded-md bg-white shadow-md">
               <h3 className="text-xl font-montserrat font-semibold mb-4">
                 General Information
               </h3>
@@ -149,7 +192,7 @@ function AddItem() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter product name"
-                    requiredq
+                    required
                   />
                 </div>
                 <div className="flex space-x-4">
@@ -201,7 +244,7 @@ function AddItem() {
                 <button
                   type="submit"
                   className="bg-myBlue text-white p-1 rounded-xl font-montserrat font-medium ">
-                  Add Item
+                  Edit Item
                 </button>
               </form>
             </div>

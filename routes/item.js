@@ -12,7 +12,7 @@ router.get("/getAllItem", async (req, res) => {
   }
 });
 
-router.get("/itemsById", async (req, res) => {
+router.post("/itemsById", async (req, res) => {
   const id = req.body.itemId;
   try {
     const item = await Item.findById(id);
@@ -49,7 +49,7 @@ router.post("/addItem", async (req, res) => {
   }
 });
 
-router.post("/editItem", async (req, res) => {
+router.put("/editItem", async (req, res) => {
   try {
     const id = req.body.itemId;
     const item = {
@@ -59,9 +59,18 @@ router.post("/editItem", async (req, res) => {
       description: req.body.description,
       image: req.body.image,
     };
+    const data = await Item.findByIdAndUpdate(id, item);
+    res.send(data);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
 
-    const res = await Item.findByIdAndUpdate(id, item);
-    res.send(res);
+router.delete("/deleteItem", async (req, res) => {
+  try {
+    const id = req.body.itemId;
+    const data = await Item.findByIdAndDelete(id);
+    res.send(data);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

@@ -8,6 +8,8 @@ import Dashboard from "./screen/admin/dashboard";
 import ListItem from "./screen/admin/listItem";
 import Cart from "./screen/user/cart";
 import DetailItem from "./screen/user/detailItem";
+import EditItem from "./screen/admin/editItem";
+import ListProducts from "./screen/user/listProducts";
 
 function App() {
   return (
@@ -20,8 +22,11 @@ function App() {
           <Route path="/dashboard" exact Component={Dashboard} />
           <Route path="/addItem" exact Component={AddItem} />
           <Route path="/listProducts" exact Component={ListItem} />
-          <Route path="/cart/:userId" exact Component={Cart} />
+          <Route path="/cart/:userId/:cartId" exact Component={Cart} />
           <Route path="/detailItem/:itemId" exact Component={DetailItem} />
+          <Route path="/editItem/:itemId" exact Component={EditItem} />
+          <Route path="/home" exact Component={Home} />
+          <Route path="/Products/:userId" exact Component={ListProducts} />
         </Routes>
       </BrowserRouter>
     </div>

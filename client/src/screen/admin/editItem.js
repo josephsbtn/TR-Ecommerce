@@ -3,15 +3,24 @@ import Navbar from "../../component/design/navbar";
 import SideNavUser from "../../component/design/SideNavUser";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import ConfirmPopUp from "../../component/notification/confirmPopUp";
+import TrashBin from "../../component/icon/trashBin";
+import TopPopUp from "../../component/notification/topPopUp";
+
 function EditItem() {
-  const itemId = useParams();
+  const { itemId } = useParams();
   const [open, setOpen] = useState(false);
+
   const [name, setName] = useState("");
-  const [productType, setProductType] = useState("Rings");
+  const [productType, setProductType] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState([]);
+
+  const [notification, setNotification] = useState(false);
+  const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -26,6 +35,21 @@ function EditItem() {
       }
     };
 
+    const fetchItem = async () => {
+      try {
+        const res = (await axios.post("/api/items/itemsById", { itemId })).data;
+        console.log("Respon", res);
+        setProductType(res.category);
+        setName(res.name);
+        setDescription(res.description);
+        setPrice(res.price);
+        setImage(res.image);
+      } catch (error) {
+        console.error(error);
+        setError(error.response?.data?.message || error.message);
+      }
+    };
+    fetchItem();
     fetchCat();
   }, []);
 
@@ -61,28 +85,58 @@ function EditItem() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const item = {
-      category: productType,
-      name: name,
-      price: price,
-      description: description,
-      image: image,
-    };
 
-    if (!category || !name || !price || !description || !image) {
-      setError("Fill all fields!!");
+    // Ensure all fields are filled
+    if (!name || !productType || !price || !description || !image) {
+      setError("All fields are required.");
       return;
     }
 
+    // Prepare data for update
+    const updateItem = {
+      category: productType,
+      name,
+      price,
+      description,
+      image,
+    };
+
+    console.log("Updating item:", updateItem); // Debugging
+
     try {
-      const res = (await axios.post("/api/items/addItem", item)).data;
+      // Send update request to the server
+      const response = await axios.put("/api/items/editItem", {
+        ...updateItem,
+        itemId,
+      });
+      console.log("Update response:", response.data);
+
+      setSuccess("Item updated successfully.");
+      setShow(true);
+      window.location.href = "/listProducts";
+    } catch (error) {
+      console.error("Update error:", error.response?.data || error.message);
+      setError(error.response?.data?.message || "Failed to update item.");
+    }
+  };
+
+  const deleteHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const res = (
+        await axios.delete("/api/items/deleteItem", { data: { itemId } })
+      ).data;
       console.log(res);
       setProductType("");
       setName("");
       setDescription("");
       setPrice("");
       setImage("");
+      setSuccess("Item deleted successfully");
+      setShow(true);
+      window.location.href = "/listProducts";
     } catch (error) {
+      setShow(true);
       setError(error.response?.data?.message || error.message);
       console.log(error);
     }
@@ -90,16 +144,48 @@ function EditItem() {
 
   return (
     <>
-      <section className="flex flex-col w-full h-auto">
+      <section className="flex flex-col bg-anotherGrey w-full h-auto">
         <div>
           <SideNavUser open={open} />
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
+        <ConfirmPopUp
+          open={notification}
+          onClose={() => setNotification(false)}>
+          <div className="flex flex-col items-center justify-center h-fit w-fit p-6 rounded-2xl space-y-4">
+            <div className="h-fit w-fit p-4 bg-red-800 rounded-full">
+              <TrashBin />
+            </div>
+
+            <h6 className="text-md font-montserrat text-black font-bold text-center ">
+              Are you sure you want <br /> to delete this room?
+            </h6>
+            <div className="flex space-x-4">
+              <button
+                className="bg-red-800 text-white px-4 py-2 rounded-xl font-montserrat font-bold"
+                onClick={deleteHandler}>
+                Yes
+              </button>
+              <button onClick={() => setNotification(false)}>No</button>
+            </div>
+          </div>
+        </ConfirmPopUp>
+        <TopPopUp show={show} onClose={() => setShow(false)}>
+          {success ? (
+            <div className="flex p-4 rounded-xl bg-green-800">
+              <p className="text-green-500">{success}</p>
+            </div>
+          ) : error ? (
+            <div>
+              <p className="text-red-500">{error}</p>
+            </div>
+          ) : null}
+        </TopPopUp>
         <div
           className="h-screen w-full p-10 flex items-center justify-center"
           onClick={() => setOpen(false)}>
           <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-10 w-full mt-10">
-            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
+            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md bg-white">
               <h3 className="text-xl font-semibold mb-4 font-montserrat">
                 Product Image
               </h3>
@@ -134,7 +220,7 @@ function EditItem() {
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 p-5 border rounded-md shadow-md">
+            <div className="w-full lg:w-1/2 p-5 border rounded-md bg-white shadow-md">
               <h3 className="text-xl font-montserrat font-semibold mb-4">
                 General Information
               </h3>
@@ -151,7 +237,7 @@ function EditItem() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter product name"
-                    requiredq
+                    required
                   />
                 </div>
                 <div className="flex space-x-4">
@@ -203,9 +289,15 @@ function EditItem() {
                 <button
                   type="submit"
                   className="bg-myBlue text-white p-1 rounded-xl font-montserrat font-medium ">
-                  Add Item
+                  Edit Item
                 </button>
               </form>
+              <button
+                type="submit"
+                className="bg-red-900 w-full mt-4 text-white p-1 rounded-xl font-montserrat font-medium "
+                onClick={() => setNotification(true)}>
+                Delete Item
+              </button>
             </div>
           </div>
         </div>

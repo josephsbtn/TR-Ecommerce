@@ -20,6 +20,8 @@ function SideNavUser({ open, onClose }) {
     console.error("Error parsing user data:", error);
   }
 
+  const userId = user ? user._id : null;
+
   function logout() {
     localStorage.removeItem("currentUser");
     window.location.href = "/";
@@ -43,7 +45,7 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">Home</h1>
             </div>
           </Link>
-          <Link to={"/Products"}>
+          <Link to={`/Products/${userId}`}>
             <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
               <ProductsIcon />
               <h1 className="text-sm text-white font-montserrat">Products</h1>
@@ -99,22 +101,10 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">Home</h1>
             </div>
           </Link>
-          <Link to={"/Products"}>
+          <Link to={`/Products/${userId}`}>
             <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
               <ProductsIcon />
               <h1 className="text-sm text-white font-montserrat">Products</h1>
-            </div>
-          </Link>
-          <Link to={"/About Us"}>
-            <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
-              <MyOrderIcon />
-              <h1 className="text-sm text-white font-montserrat">About Us</h1>
-            </div>
-          </Link>
-          <Link to={"/login"}>
-            <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
-              <UserIcon />
-              <h1 className="text-sm text-white font-montserrat">Login</h1>
             </div>
           </Link>
           <Link to={"/myOrders"}>
@@ -123,12 +113,24 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">My Orders</h1>
             </div>
           </Link>
+          <Link to={"/About Us"}>
+            <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
+              <AboutMeIcon />
+              <h1 className="text-sm text-white font-montserrat">About Us</h1>
+            </div>
+          </Link>
           <Link to={"/myAccount"}>
             <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
               <UserIcon />
               <h1 className="text-sm text-white font-montserrat">My Account</h1>
             </div>
           </Link>
+          <div
+            className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-red-800 duration-150 transition-all cursor-pointer"
+            onClick={logout}>
+            <ExitIcon />
+            <h1 className="text-sm text-white font-montserrat">Log Out</h1>
+          </div>
         </>
       ) : null}
     </div>

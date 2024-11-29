@@ -20,25 +20,47 @@ router.post("/getUserCart", async (req, res) => {
 });
 
 router.post("/addItem", async (req, res) => {
-  const { item } = {
-    userId: req.body.userid,
-    itemId: req.body.itemId,
-    quantity: req.body.quantity,
-  };
+  const { userId, items } = req.body;
   try {
-    const cart = await Cart.findOne({ userId: userId });
+    if (!userId || !items || !Array.isArray(items)) {
+      return res.status(400).json({ message: "Invalid input data" });
+    }
+
+    let cart = await Cart.findOne({ userId });
 
     if (!cart) {
       cart = new Cart({
         userId,
-        items: [{ itemID: item.itemId, quantity: item.quantity }],
+        items: items.map((item) => ({
+          itemID: item.itemID,
+          quantity: item.quantity || 1,
+        })),
       });
-      return res.send(cart);
+    } else {
+      items.forEach((newItem) => {
+        if (!newItem.itemID) {
+          throw new Error("ItemID is missing in one of the items");
+        }
+
+        const existingItem = cart.items.find(
+          (item) => item.itemID === newItem.itemID
+        );
+
+        if (existingItem) {
+          existingItem.quantity += newItem.quantity || 1;
+        } else {
+          cart.items.push({
+            itemID: newItem.itemID,
+            quantity: newItem.quantity || 1,
+          });
+        }
+      });
     }
-    cart.items.push({ itemID: item.itemId, quantity: item.quantity });
-    res.send(cart);
+    const savedCart = await cart.save();
+    res.status(200).json(savedCart);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error adding items to cart:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
