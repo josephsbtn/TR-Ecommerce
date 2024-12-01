@@ -13,6 +13,9 @@ module.exports = {
       },
       fontFamily: {
         montserrat: ["Montserrat", "system-ui"],
+        lateef: ["lateef", "serif"],
+        roman: ["roman", "serif"],
+        headlanone: ["Headlan one", "serif"],
       },
     },
   },

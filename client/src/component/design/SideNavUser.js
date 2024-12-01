@@ -30,10 +30,12 @@ function SideNavUser({ open, onClose }) {
   return (
     <div
       className={`z-30 flex flex-col bg-myBlue items-start shadow-2xl shadow-black h-screen w-fit fixed top-0 transition-all duration-300 
-      ${open ? "left-0" : "-left-96"}`}>
+      ${open ? "left-0" : "-left-96"}`}
+    >
       <div
         className="flex w-full justify-start items-center p-2 mt-2 scale-90 cursor-pointer"
-        onClick={onClose}>
+        onClick={onClose}
+      >
         <HamburgerMenu />
       </div>
 
@@ -51,7 +53,7 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">Products</h1>
             </div>
           </Link>
-          <Link to={"/About Us"}>
+          <Link to={"/Aboutus"}>
             <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
               <AboutMeIcon />
               <h1 className="text-sm text-white font-montserrat">About Us</h1>
@@ -88,7 +90,8 @@ function SideNavUser({ open, onClose }) {
           </Link>
           <div
             className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-red-800 duration-150 transition-all cursor-pointer"
-            onClick={logout}>
+            onClick={logout}
+          >
             <ExitIcon />
             <h1 className="text-sm text-white font-montserrat">Log Out</h1>
           </div>
@@ -113,7 +116,7 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">My Orders</h1>
             </div>
           </Link>
-          <Link to={"/About Us"}>
+          <Link to={"/Aboutus"}>
             <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
               <AboutMeIcon />
               <h1 className="text-sm text-white font-montserrat">About Us</h1>
@@ -121,7 +124,8 @@ function SideNavUser({ open, onClose }) {
           </Link>
           <div
             className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-red-800 duration-150 transition-all cursor-pointer"
-            onClick={logout}>
+            onClick={logout}
+          >
             <ExitIcon />
             <h1 className="text-sm text-white font-montserrat">Log Out</h1>
           </div>
