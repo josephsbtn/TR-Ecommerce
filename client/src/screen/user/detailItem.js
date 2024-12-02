@@ -165,7 +165,7 @@ function DetailItem() {
             </button>
           </div>
         </section>
-        <BagButton userId={userId} />
+        {user ? <BagButton userId={userId} /> : null}
       </div>
     </section>
   );

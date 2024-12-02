@@ -12,14 +12,17 @@ router.get("/getAllHistory", async (req, res) => {
   }
 });
 
-router.post("/addHistory", async (req, res) => {
+router.post("/addHistory", async (req, res, next) => {
   try {
     const paid = new History({
       cartID: req.body.cartId,
+      PaymentMethod: req.body.PaymentMethod,
     });
-    const newPaid = await History.bulkSave();
+    await paid.save();
+    res.status(200).json({ message: "Payment history added successfully" });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error(error);
+    next(error);
   }
 });
 

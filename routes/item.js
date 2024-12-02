@@ -6,7 +6,7 @@ const Item = require("../models/item");
 router.get("/getAllItem", async (req, res) => {
   try {
     const allItems = await Item.find({});
-    res.send(allItems);
+    return res.send(allItems);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

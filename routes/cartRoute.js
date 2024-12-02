@@ -13,7 +13,12 @@ router.post("/getUserCart", async (req, res) => {
     })
       .populate("userId")
       .populate({ path: "items.itemID" });
-    res.send(cart);
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found", cart: [] });
+    }
+
+    res.status(200).json(cart);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -71,31 +76,60 @@ router.post("/addItem", async (req, res) => {
 });
 
 router.delete("/deleteItem", async (req, res) => {
-  const userId = req.body.userId;
-  const itemID = req.body.itemID;
+  const { cartID, itemID } = req.body; // Extract cartID and itemID
+
   try {
-    const cart = await Cart.findOne({ userId });
+    // Find the cart by ID
+    const cart = await Cart.findById(cartID);
     if (!cart) {
-      return res.status(400).json({ message: "Cart not found!" });
+      return res.status(404).json({ message: "Cart not found!" });
     }
 
-    const itemIndex = cart.items.findIndex((item) => item.itemID === itemID);
+    // Find the item index
+    const itemIndex = cart.items.findIndex(
+      (item) => item.itemID.equals(itemID) // Correct comparison for ObjectId
+    );
 
-    if (itemIndex == -1) {
-      return res.status(400).json({ message: "Item not found in cart!" });
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: "Item not found in cart!" });
     }
 
-    const deletedItem = items.splice(itemIndex, 1);
-    res.send(deletedItem);
+    // Remove the item
+    const deletedItem = cart.items.splice(itemIndex, 1);
 
+    // Save the updated cart
     await cart.save();
+
+    // Send response
+    res.status(200).json({ message: "Item deleted successfully", deletedItem });
   } catch (error) {
     console.error("Error deleting item from cart:", error.message);
     res.status(500).json({
-      message: "Error deleting item from cart:",
+      message: "Error deleting item from cart",
       error: error.message,
     });
   }
+});
+
+router.put("/setTotal", async (req, res) => {
+  const { cartID, total } = req.body;
+  console.log("BODY :", cartID, total);
+  try {
+    const updateResult = await Cart.updateOne(
+      { _id: cartID },
+      { $set: { total } }
+    );
+
+    if (updateResult.modifiedCount === 0) {
+      return res.status(400).json({ message: "Cart not found!" });
+    }
+
+    res.status(200).json({ message: "Total updated successfully!" });
+  } catch (error) {
+    console.error("Error updating cart total:", error.message);
+    res.status(500).json({ message: "Error updating cart total" });
+  }
+  ``;
 });
 
 router.put("/increaseItem", async (req, res) => {
@@ -119,19 +153,37 @@ router.put("/increaseItem", async (req, res) => {
 router.put("/decreaseItem", async (req, res) => {
   const itemId = req.body.itemID;
   const cartId = req.body.cartID;
+
   try {
+    // Decrease the item quantity
     const updateResult = await Cart.updateOne(
-      { _id: cartID, "items.itemID": itemID },
+      { _id: cartId, "items.itemID": itemId },
       { $inc: { "items.$.quantity": -1 } }
     );
 
     if (updateResult.modifiedCount === 0) {
       return res.status(400).json({ message: "Cart or item not found!" });
     }
-
-    await cart.save();
+    res.status(200).json({ message: "Item updated successfully!" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+router.put("/checkout", async (req, res) => {
+  const { cartID } = req.body;
+  try {
+    const updateResult = await Cart.updateOne(
+      { _id: cartID },
+      { $set: { payment: true } }
+    );
+    if (updateResult.modifiedCount === 0) {
+      return res.status(400).json({ message: "Cart not found!" });
+    }
+    res.status(200).json({ message: "Payment updated successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

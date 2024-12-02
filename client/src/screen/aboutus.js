@@ -13,12 +13,13 @@ function Aboutus() {
         <div>
           <SideNavUser open={open} onClose={() => setOpen(false)} />
         </div>
-        <Navbar OnOpen={() => setOpen(!open)} />
+        <div className="z-20 fixed">
+          <Navbar OnOpen={() => setOpen(!open)} />
+        </div>
 
         <div
           className="h-auto w-full bg-white mt-16"
-          onClick={() => setOpen(false)}
-        >
+          onClick={() => setOpen(false)}>
           <div className="max-w-7xl mx-auto p-8">
             <div className="text-center">
               <h2 className="text-gray-700 text-xl font-roman tracking-wide">
