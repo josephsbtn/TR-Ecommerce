@@ -27,11 +27,7 @@ function Navbar({ OnOpen }) {
         </Link>
       </div>
 
-      <div className="flex scale-90 items-center space-x-6">
-        <Link to={`/profile/${userId}`}>
-          <UserIcon />
-        </Link>
-      </div>
+      <div className="flex scale-90 items-center space-x-6"></div>
     </div>
   );
 }
