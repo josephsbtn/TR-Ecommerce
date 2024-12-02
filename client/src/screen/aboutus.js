@@ -4,6 +4,11 @@ import SideNavUser from "../component/design/SideNavUser";
 import image1 from "../component/image/image1AboutUs.png";
 import image2 from "../component/image/image2AboutUs.png";
 import image3 from "../component/image/image3AboutUs.png";
+import image4 from "../component/image/image4AboutUs.png";
+import image5 from "../component/image/image5AboutUs.png";
+import image6 from "../component/image/image6AboutUs.png";
+import image7 from "../component/image/image7AboutUs.png";
+import image8 from "../component/image/image8AboutUs.png";
 
 function Aboutus() {
   const [open, setOpen] = useState(false);
@@ -18,9 +23,9 @@ function Aboutus() {
         </div>
 
         <div
-          className="h-auto w-full bg-white mt-16"
+          className="h-auto w-full bg-white mt-24 py-8"
           onClick={() => setOpen(false)}>
-          <div className="max-w-7xl mx-auto p-8">
+          <div className="w-full mx-auto flex flex-col items-center">
             <div className="text-center">
               <h2 className="text-gray-700 text-xl font-roman tracking-wide">
                 OUR MOTTO
@@ -33,41 +38,53 @@ function Aboutus() {
               </p>
             </div>
 
-            <div className="relative mt-16">
-              <div className="w-full flex justify-end">
-                <div className="absolute w-1/3 z-0">
+            <div className="relative mt-44 w-[90%] h-max py-36">
+              <div className="w-full flex justify-between">
+                <div className="max-w-[50%]">
+                  <h1 className="text-4xl font-lateef w-full text-center">
+                    ROSE SHARON
+                  </h1>
+                  <p className="w-full text-center mt-10 font-montserrat text-[#706a6a] text-sm font-normal">
+                    Is more than just luxury lab-grown diamond jewelry. It
+                    embodies the idea of mindful living and self-expression
+                    through jewelry.
+                    <br />
+                    <br />
+                    Our vision is to redefine everyday luxury with
+                    heirloom-quality products, responsibly sourced and
+                    consciously crafted for positive impact. With ROSE SHARON,
+                    each day becomes a meaningful and elegant expression of
+                    self. “Adorn your days with mindful luxury”
+                  </p>
+                </div>
+                <div className="absolute right-8 -top-6 w-1/3 z-0">
                   {" "}
-                  {/* Ensure this element is behind the navbar */}
                   <img
                     src={image1}
                     alt="Jewelry Image"
                     className=" rounded-bl-[80px] overflow-hidden object-cover"
                   />
-                  <div className="absolute border-t-4 border-l-4 border-yellow-600 rounded-bl-[80px] h-full w-full top-0 left-0 -z-10"></div>
+                  <div className="absolute bottom-10 right-16 border-t-4 border-l-4 border-r-4 border-b-4 border-yellow-600 rounded-tl-[150px] h-full w-full -z-10"></div>
                 </div>
                   
               </div>
             </div>
 
-            <div className="mt-12 text-center">
-              <h2 className="text-2xl font-headlanone font-bold">
-                ROSE SHARON
-              </h2>
-              {/* Why Rose of Sharon Section */}
-              <div className="mt-16">
+            <div className="mt-24 w-[90%] text-center">
+              <div className="mt-10">
                 <div className="text-center">
-                  <h2 className="text-2xl font-bold text-gray-700">
+                  <h2 className="text-[40px] absolute right-[40%] font-medium font-lateef text-balck">
                     Why Rose of Sharon?
                   </h2>
                 </div>
 
-                <div className="mt-12 flex flex-col lg:flex-row items-center justify-center gap-8">
+                <div className=" flex flex-col lg:flex-row items-center justify-center gap-8">
                   {/* Left Image */}
                   <div className="w-full lg:w-1/2">
                     <img
                       src={image2}
                       alt="Rose of Sharon Jewelry"
-                      className=" w-96 h-80object-cover shadow-md mt-16 "
+                      className=" w-96 h-80object-cover shadow-md"
                     />
                   </div>
 
@@ -93,6 +110,88 @@ function Aboutus() {
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div
+              className="w-full
+             h-fit relative bg-red-500 mt-36 ">
+              <img
+                src={image4}
+                alt="Jewelry Image"
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-black w-full h-full bg-opacity-30">
+                <h1 className="font-lateef text-white text-center mt-20 text-[50px] ">
+                  No limits to the lifestyle you deserve
+                </h1>
+                <p className="font-montserrat text-white text-center mt-10 text-[20px] w-full ">
+                  Our team of 3d modelers jewelers can create literally any ring
+                  you can imagine,
+                  <br /> including complex design We’re opening up our services
+                  to private clients, <br /> so you can get a beautiful,
+                  designer quality
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 mt-36 gap-4 justify-center w-[90%]  items-start">
+              <div className="flex flex-col items-center justify-start ">
+                <img
+                  src={image5}
+                  alt="Jewelry Image
+                "
+                  className="w-72 h-72 object-cover object-center"
+                />
+                <h1 className="font-lateef text-[40px] font-bold">
+                  For Beauty
+                </h1>
+                <p className="font-montserrat text-sm text-center">
+                  Offending Belonging Promotion Provision An Be Oh Consulted
+                </p>
+              </div>
+              <div className="flex flex-col items-center justify-start">
+                <img
+                  src={image6}
+                  alt="Jewelry Image
+                "
+                  className="w-72 h-72 object-cover object-center"
+                />
+                <h1 className="font-lateef text-[40px] font-bold">
+                  Product Quality
+                </h1>
+                <p className="font-montserrat text-sm text-center">
+                  Blessin Welcoened Ladyship She Met Humoured Sir Breeding
+                </p>
+              </div>
+              <div className="flex flex-col items-center justify-start">
+                <img
+                  src={image7}
+                  alt="Jewelry Image
+                "
+                  className="w-72 h-72 object-cover object-center"
+                />
+                <h1 className="font-lateef text-[40px] font-bold">
+                  For Comfort
+                </h1>
+                <p className="font-montserrat text-sm text-center">
+                  Providing comfort and elegance in every piece
+                </p>
+              </div>
+              <div className="flex flex-col items-center justify-start ">
+                <img
+                  src={image8}
+                  alt="Jewelry Image
+                "
+                  className="w-72 h-72 object-cover object-center"
+                />
+                <h1 className="font-lateef text-[40px] font-bold">
+                  Well Designed
+                </h1>
+                <p className="font-montserrat text-sm text-center">
+                  To create and offer high-quality, timeless jewelry that
+                  reflects superior craftsmanship and innovative design
+                </p>
               </div>
             </div>
           </div>
