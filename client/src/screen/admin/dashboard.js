@@ -77,7 +77,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = (await axios.get("/api/users/getAllUser")).data;
+        const res = (await axios.get("/api/users/getallusers")).data;
         setUser(res);
       } catch (error) {
         setError(error.message);
@@ -87,7 +87,7 @@ function Dashboard() {
     const fetchPembelian = async () => {
       setLoading(true);
       try {
-        const res = (await axios.get("api/history/getAllHistory")).data;
+        const res = (await axios.get("/api/history/getAllHistory")).data;
         setPembelian(res);
         setLoading(false);
       } catch (error) {

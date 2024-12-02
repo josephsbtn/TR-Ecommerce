@@ -157,7 +157,9 @@ function DetailItem() {
               </h1>
             </div>
             <button
-              onClick={addCart}
+              onClick={() =>
+                userId ? addCart() : (window.location.href = "/login")
+              }
               className="bg-myBlue w-full font-medium font-montserrat text-sm text-white p-2 rounded-md hover:bg-white hover:text-myGold hover:border-2 hover:border-borderGrey transition-all duration-300">
               Add to Cart
             </button>

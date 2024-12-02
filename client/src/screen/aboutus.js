@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../component/design/navbar";
 import SideNavUser from "../component/design/SideNavUser";
+import image1 from "../component/image/image1AboutUs.png";
 
 function Aboutus() {
   const [open, setOpen] = useState(false);
@@ -12,11 +13,13 @@ function Aboutus() {
         </div>
         <Navbar OnOpen={() => setOpen(!open)} />
 
-        <div className="h-auto w-full bg-white" onClick={() => setOpen(false)}>
+        <div
+          className="h-auto w-full bg-white mt-16"
+          onClick={() => setOpen(false)}>
           <div className="max-w-7xl mx-auto p-8">
             <div className="text-center">
               <img
-                src="/path-to-logo.png"
+                src={image1}
                 alt="Rose of Sharon Logo"
                 className="mx-auto w-32 mb-4"
               />
@@ -33,9 +36,9 @@ function Aboutus() {
 
             <div className="relative mt-16">
               <div className="w-full flex justify-end">
-                <div className="relative w-1/2">
+                <div className="absolute w-1/3">
                   <img
-                    src="/path-to-image.png"
+                    src={image1}
                     alt="Jewelry Image"
                     className="rounded-bl-[80px] overflow-hidden object-cover"
                   />

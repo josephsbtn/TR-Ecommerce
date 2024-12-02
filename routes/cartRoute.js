@@ -37,10 +37,9 @@ router.post("/addItem", async (req, res) => {
           itemID: item.itemID,
           quantity: item.quantity || 1,
         })),
-        total: subtotal, // Set the total based on the subtotal passed
+        total: subtotal,
       });
     } else {
-      // If cart exists, update the items
       items.forEach((newItem) => {
         if (!newItem.itemID) {
           throw new Error("ItemID is missing in one of the items");
@@ -60,7 +59,6 @@ router.post("/addItem", async (req, res) => {
         }
       });
 
-      // Update the total price of the cart
       cart.total += subtotal;
     }
 
@@ -72,23 +70,47 @@ router.post("/addItem", async (req, res) => {
   }
 });
 
-router.put("/increaseItem", async (req, res) => {
-  const itemId = req.body.itemID;
-  const cartId = req.body.cartID;
+router.delete("/deleteItem", async (req, res) => {
+  const userId = req.body.userId;
+  const itemID = req.body.itemID;
   try {
-    const cart = await Cart.findOne({ _id: cartId });
+    const cart = await Cart.findOne({ userId });
     if (!cart) {
       return res.status(400).json({ message: "Cart not found!" });
     }
 
-    const item = await Cart.find((i) => i.itemID.toString() === itemId);
-    if (!item) {
-      return res.status(400).json({ message: "Item not found!" });
+    const itemIndex = cart.items.findIndex((item) => item.itemID === itemID);
+
+    if (itemIndex == -1) {
+      return res.status(400).json({ message: "Item not found in cart!" });
     }
 
-    item.quantity += 1;
+    const deletedItem = items.splice(itemIndex, 1);
+    res.send(deletedItem);
 
     await cart.save();
+  } catch (error) {
+    console.error("Error deleting item from cart:", error.message);
+    res.status(500).json({
+      message: "Error deleting item from cart:",
+      error: error.message,
+    });
+  }
+});
+
+router.put("/increaseItem", async (req, res) => {
+  const { itemID, cartID } = req.body;
+  try {
+    const updateResult = await Cart.updateOne(
+      { _id: cartID, "items.itemID": itemID },
+      { $inc: { "items.$.quantity": 1 } }
+    );
+
+    if (updateResult.modifiedCount === 0) {
+      return res.status(400).json({ message: "Cart or item not found!" });
+    }
+
+    res.status(200).json({ message: "Item quantity updated successfully!" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -98,17 +120,14 @@ router.put("/decreaseItem", async (req, res) => {
   const itemId = req.body.itemID;
   const cartId = req.body.cartID;
   try {
-    const cart = await Cart.findOne({ _id: cartId });
-    if (!cart) {
-      return res.status(400).json({ message: "Cart not found!" });
-    }
+    const updateResult = await Cart.updateOne(
+      { _id: cartID, "items.itemID": itemID },
+      { $inc: { "items.$.quantity": -1 } }
+    );
 
-    const item = await Cart.find((i) => i.itemID.toString() === itemId);
-    if (!item) {
-      return res.status(400).json({ message: "Item not found!" });
+    if (updateResult.modifiedCount === 0) {
+      return res.status(400).json({ message: "Cart or item not found!" });
     }
-
-    item.quantity -= 1;
 
     await cart.save();
   } catch (error) {

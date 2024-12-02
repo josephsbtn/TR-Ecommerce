@@ -14,6 +14,7 @@ function ListProducts() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const storedUser = localStorage.getItem("currentUser");
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -99,7 +100,7 @@ function ListProducts() {
                 </div>
               ))}
 
-              <BagButton userId={userId} />
+              {storedUser ? <BagButton userId={userId} /> : null}
             </div>
           </div>
         </div>

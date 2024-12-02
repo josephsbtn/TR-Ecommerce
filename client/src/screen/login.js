@@ -61,6 +61,11 @@ function Login() {
         </div>
 
         <div className="flex flex-col w-1/3 h-fit  p-4 justify-center items-center bg-myBlue ">
+          <div className="w-full">
+            <Link to={"/"}>
+              <h1 className="w-full text-end text-white font-bold">X</h1>
+            </Link>
+          </div>
           <div>
             <h2 className="text-2xl font-bold text-white">LOG IN</h2>
           </div>

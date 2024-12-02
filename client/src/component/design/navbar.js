@@ -16,7 +16,7 @@ function Navbar({ OnOpen }) {
     console.error("Error parsing user data:", error);
   }
   return (
-    <div className="flex bg-myBlue w-full h-20 items-center fixed justify-between">
+    <div className="flex bg-myBlue w-full px-10 h-[70px] items-center fixed justify-between">
       <button className="z-20 flex items-center scale-90" onClick={OnOpen}>
         <HamburgerMenu />
       </button>
