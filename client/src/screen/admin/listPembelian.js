@@ -9,6 +9,8 @@ function ListPembelian() {
   const [pembelian, setPembelian] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [id, setId] = useState(null);
+  const [nama, setNama] = useState(null);
 
   useEffect(() => {
     const fetchPembelian = async () => {
@@ -21,6 +23,15 @@ function ListPembelian() {
       } catch (err) {
         setLoading(false);
         setError(err.message || "Failed to fetch data");
+      }
+    };
+
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/users/getallusers");
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
       }
     };
 
@@ -65,6 +76,9 @@ function ListPembelian() {
                     <h2 className="font-semibold text-lg text-gray-800">
                       Payment Method: {history.PaymentMethod}
                     </h2>
+                    <p className="text-gray-600">
+                      User: {history.cartID.userId?.name || "Unknown"}
+                    </p>
                     {history.cartID.items.map((item) => (
                       <div key={item.itemID._id} className="mt-2">
                         <p className="text-gray-600">

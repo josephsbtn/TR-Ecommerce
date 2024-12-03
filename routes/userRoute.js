@@ -59,4 +59,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/getUserById", async (req, res) => {
+  const { id } = req.body;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error("Error during login:", error);
+    return res
+      .status(500)
+      .json({ error: error.message || "Internal Server Error" });
+  }
+});
+
 module.exports = router;

@@ -3,21 +3,27 @@ const router = express.Router();
 
 const History = require("../models/historyPembayaran");
 const Cart = require("../models/cart");
+const User = require("../models/user");
 
 router.get("/getAllHistory", async (req, res) => {
   try {
-    const history = await History.find({})
-      .populate({
-        path: "cartID",
-        model: "Cart", // Explicitly reference the model name
-        populate: {
+    const history = await History.find({}).populate({
+      path: "cartID",
+      model: "Cart",
+      populate: [
+        {
           path: "items.itemID",
-          model: "Item", // Ensure Item is registered as well
+          model: "Item",
         },
-      })
-      .populate("cartID.userId"); // Ensure user population if needed
+        {
+          path: "userId",
+          model: "User",
+          select: "name",
+        },
+      ],
+    });
 
-    if (!history) {
+    if (!history || history.length === 0) {
       return res.status(404).json({ message: "No history found" });
     }
 
