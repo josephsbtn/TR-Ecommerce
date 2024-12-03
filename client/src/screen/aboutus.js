@@ -143,7 +143,7 @@ function Aboutus() {
                 "
                   className="w-72 h-72 object-cover object-center"
                 />
-                <h1 className="font-lateef text-[40px] font-bold">
+                <h1 className="font-lateef text-[30px] font-bold">
                   For Beauty
                 </h1>
                 <p className="font-montserrat text-sm text-center">
@@ -157,7 +157,7 @@ function Aboutus() {
                 "
                   className="w-72 h-72 object-cover object-center"
                 />
-                <h1 className="font-lateef text-[40px] font-bold">
+                <h1 className="font-lateef text-[30px] font-bold">
                   Product Quality
                 </h1>
                 <p className="font-montserrat text-sm text-center">
@@ -171,7 +171,7 @@ function Aboutus() {
                 "
                   className="w-72 h-72 object-cover object-center"
                 />
-                <h1 className="font-lateef text-[40px] font-bold">
+                <h1 className="font-lateef text-[30px] font-bold">
                   For Comfort
                 </h1>
                 <p className="font-montserrat text-sm text-center">
@@ -185,7 +185,7 @@ function Aboutus() {
                 "
                   className="w-72 h-72 object-cover object-center"
                 />
-                <h1 className="font-lateef text-[40px] font-bold">
+                <h1 className="font-lateef text-[30px] font-bold">
                   Well Designed
                 </h1>
                 <p className="font-montserrat text-sm text-center">

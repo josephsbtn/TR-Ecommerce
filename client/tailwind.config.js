@@ -16,6 +16,8 @@ module.exports = {
         lateef: ["lateef", "serif"],
         roman: ["roman", "serif"],
         headlanone: ["Headlan one", "serif"],
+        GreatVibes: ["Great Vibes", "serif"],
+        Scheherazade: ["Scheherazade New", "serif"],
       },
     },
   },

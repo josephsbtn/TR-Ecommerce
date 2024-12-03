@@ -36,8 +36,6 @@ function ListPembelian() {
 
         <Navbar OnOpen={() => setOpen(!open)} />
 
-        {/* <ConfirmPopUp open={open} onClose={() => setOpen(false)} /> */}
-
         <div
           className="h-screen w-full bg-gray-100"
           onClick={() => setOpen(false)}>
@@ -73,7 +71,11 @@ function ListPembelian() {
                           Product: {item.itemID.name}
                         </p>
                         <p className="text-gray-600">
-                          Price: ${item.itemID.price?.toFixed(2) || "0.00"}
+                          Price:{" "}
+                          {new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(item.itemID.price)}
                         </p>
                         <p className="text-gray-600">
                           Quantity: {item.quantity}
