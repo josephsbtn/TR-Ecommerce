@@ -30,7 +30,8 @@ function Login() {
     };
     try {
       setLoading(true);
-      const res = (await axios.post("/api/users/login", user)).data;
+      const res = (await axios.post(`/api/users/login`, user)).data;
+      console.log("LOGIN :", res);
       localStorage.setItem("currentUser", JSON.stringify(res));
       setSucces("Login Successful");
       console.log(success);

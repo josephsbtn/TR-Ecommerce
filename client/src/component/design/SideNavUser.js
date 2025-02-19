@@ -107,7 +107,7 @@ function SideNavUser({ open, onClose }) {
               <h1 className="text-sm text-white font-montserrat">Products</h1>
             </div>
           </Link>
-          <Link to={"/myOrders"}>
+          <Link to={`/myOrders/${userId}`}>
             <div className="flex justify-start items-center w-60 space-x-4 p-4 hover:bg-myGold duration-150 transition-all">
               <MyOrderIcon />
               <h1 className="text-sm text-white font-montserrat">My Orders</h1>

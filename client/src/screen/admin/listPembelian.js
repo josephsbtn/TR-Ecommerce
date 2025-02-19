@@ -77,7 +77,7 @@ function ListPembelian() {
                       Payment Method: {history.PaymentMethod}
                     </h2>
                     <p className="text-gray-600">
-                      User: {history.cartID.userId?.name || "Unknown"}
+                      User: {history.cartID.userId?._id || "Unknown"}
                     </p>
                     {history.cartID.items.map((item) => (
                       <div key={item.itemID._id} className="mt-2">

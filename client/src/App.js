@@ -12,6 +12,7 @@ import EditItem from "./screen/admin/editItem";
 import ListProducts from "./screen/user/listProducts";
 import Aboutus from "./screen/aboutus";
 import ListPembelian from "./screen/admin/listPembelian";
+import MyOrders from "./screen/user/myOrders";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/cart/:userId" exact Component={Cart} />
           <Route path="/aboutus" exact Component={Aboutus} />
           <Route path="/listPembelian" exact Component={ListPembelian} />
+          <Route path="/myOrders/:userId" exact Component={MyOrders} />
         </Routes>
       </BrowserRouter>
     </div>

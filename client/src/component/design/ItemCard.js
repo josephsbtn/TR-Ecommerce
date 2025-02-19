@@ -16,7 +16,7 @@ function ItemCard({ item }) {
           <h1 className="ml-4 font-montserrat text-sm font-medium">
             {item.name}
           </h1>
-          <p className="max-w-56 overflow-hidden ml-4 text-xs font-montserrat whitespace-nowrap text-ellipsis">
+          <p className="max-w-40 overflow-hidden ml-4 text-xs font-montserrat  line-clamp-1 ">
             {item.description}
           </p>
 

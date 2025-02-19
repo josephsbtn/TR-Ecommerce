@@ -205,14 +205,20 @@ function AddItem() {
                       value={productType}
                       onChange={(e) => setProductType(e.target.value)}>
                       <option value="">Select Product Type</option>
-                      {category.map((cat) => (
-                        <option
-                          className="font-montserrat text-sm"
-                          value={cat._id}
-                          key={cat._id}>
-                          {cat.name}
+                      {category && category.length > 0 ? (
+                        category.map((cat) => (
+                          <option
+                            className="font-montserrat text-sm border"
+                            value={cat._id}
+                            key={cat._id}>
+                            {cat.name}
+                          </option>
+                        ))
+                      ) : (
+                        <option className="font-montserrat text-sm border border-black bg-rose-300">
+                          No Category Found
                         </option>
-                      ))}
+                      )}
                     </select>
                   </div>
                   <div className="w-1/2">

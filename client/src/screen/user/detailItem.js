@@ -8,7 +8,7 @@ import axios from "axios";
 function DetailItem() {
   const { itemId } = useParams();
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  const userId = user ? user._id : null; // Handle null user case
+  const userId = user ? user._id : null;
   const [quantity, setQuantity] = useState(1);
 
   const [name, setName] = useState("");

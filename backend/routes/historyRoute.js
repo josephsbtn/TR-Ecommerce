@@ -48,4 +48,38 @@ router.post("/addHistory", async (req, res, next) => {
   }
 });
 
+router.get("/getAllHistoryByID", async (req, res) => {
+  try {
+    const { userId } = req.query; // Access userId from the query string
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const history = await History.find({ userId: userId }).populate({
+      path: "cartID",
+      model: "Cart",
+      populate: [
+        {
+          path: "items.itemID",
+          model: "Item",
+        },
+        {
+          path: "userId",
+          model: "User",
+          select: "name",
+        },
+      ],
+    });
+
+    if (!history || history.length === 0) {
+      return res.status(404).json({ message: "No history found" });
+    }
+
+    res.json(history);
+  } catch (error) {
+    console.error("Error fetching history:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;

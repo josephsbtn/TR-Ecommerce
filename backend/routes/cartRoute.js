@@ -32,7 +32,7 @@ router.post("/addItem", async (req, res) => {
       return res.status(400).json({ message: "Invalid input data" });
     }
 
-    let cart = await Cart.findOne({ userId });
+    let cart = await Cart.findOne({ userId, payment: false });
 
     // If the cart doesn't exist, create a new one
     if (!cart) {
