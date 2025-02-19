@@ -4,7 +4,7 @@ var mongoURL =
   "mongodb+srv://josephsebastian2505:080107@cluster0.8qnvp.mongodb.net/RoS";
 
 mongoose
-  .connect(mongoURL, { useUnifiedTopology: true, useNewUrlParser: true })
+  .connect(mongoURL)
   .then(() => {
     console.log("Mongo DB connection Successful");
   })
